@@ -11,6 +11,7 @@ module.exports = {
     "airbnb-base",
     "plugin:import/recommended",
     "plugin:vue/vue3-recommended",
+    "@vue/eslint-config-typescript"
   ],
   overrides: [
     {

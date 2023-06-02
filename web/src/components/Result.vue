@@ -17,9 +17,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import { toRefs } from "vue"
-  import useIndexStore from "../stores/IndexStore"
+  import useIndexStore from "../stores/IndexStore.ts"
 
   const indexStore = useIndexStore()
   const { newRent, baseRent, currentIndex, baseIndex } = toRefs(indexStore)

@@ -55,9 +55,11 @@
   </div>
 </template>
 
-<script setup>
-  import { ref } from "vue"
-  import useIndexStore from "../stores/IndexStore"
+<script setup lang="ts">
+  import { computed, ref } from "vue"
+  import useIndexStore from "../stores/IndexStore.ts"
+
+  import BodyRequest from "../types/BodyRequest.ts"
 
   const indexStore = useIndexStore()
 
@@ -65,10 +67,11 @@
   const signedOn = ref("")
   const baseRent = ref(0)
   const region = ref("")
-  const errors = ref({})
+
+  const errors = computed(() => indexStore.getErrors)
 
   const handleSubmit = async () => {
-    const body = {
+    const body: BodyRequest = {
       start_date: startDate.value,
       signed_on: signedOn.value,
       base_rent: baseRent.value,
@@ -76,7 +79,6 @@
     }
 
     await indexStore.getNewRent(body)
-    errors.value = indexStore.errors
   }
 </script>
 

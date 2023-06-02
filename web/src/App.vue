@@ -5,10 +5,10 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
   import Result from "./components/Result.vue"
   import Form from "./components/Form.vue"
-  import useIndexStore from "./stores/IndexStore"
+  import useIndexStore from "./stores/IndexStore.ts"
 
   const indexStore = useIndexStore()
 </script>
