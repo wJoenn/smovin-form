@@ -23,7 +23,7 @@ const useIndexStore = defineStore("IndexStore", () => {
 
   const getNewRent = async (body: BodyRequest) => {
     try {
-      const res = await axios.post("http://localhost:3000/v1/indexations", body)
+      const res = await axios.post("http://localhost:4567/v1/indexations", body)
       const data = res.data
 
       newRent.value = data.new_rent

@@ -1,11 +1,23 @@
 require:
   - rubocop-performance
+  - rubocop-rails
 
 AllCops:
   NewCops: enable
   SuggestExtensions: false
   Exclude:
     - "Gemfile"
+    - "bin/**/*"
+    - "db/**/*"
+    - "config/**/*"
+    - "node_modules/**/*"
+    - "resources/**/*"
+    - "script/**/*"
+    - "support/**/*"
+    - "spec/spec_helper.rb"
+    - "tmp/**/*"
+    - "test/**/*"
+    - "vendor/**/*"
 
 Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
