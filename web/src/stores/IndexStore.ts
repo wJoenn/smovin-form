@@ -32,7 +32,6 @@ const useIndexStore = defineStore("IndexStore", () => {
       baseIndex.value = data.base_index
     } catch (err: any) {
       errors.value = err.response.data
-      console.log(errors.value)
     }
   }
 
