@@ -26,17 +26,23 @@ RSpec.describe IndexesController, type: :request do
       expect(data["region"]).to include "must_be_in_belgium"
       expect(data["start_date"]).to include "must_be_in_the_past"
       expect(data["signed_on"]).to include "must_be_in_the_past"
+
+      wrong_params = { base_rent: -10, region: "Paris", start_date: Date.tomorrow, signed_on: 100.years.ago }
+      post "/v1/indexations", params: wrong_params, as: :json
+      data = response.parsed_body
+      p data
+      expect(data["signed_on"]).to include "too_old_to_index"
     end
 
     it "returns http ok" do
-      params = { base_rent: 10, region: "brussels", start_date: 20.years.ago, signed_on: Date.yesterday }
+      params = { base_rent: 10, region: "brussels", start_date: 20.years.ago, signed_on: 20.years.ago + 3.months }
       post "/v1/indexations", params:, as: :json
 
       expect(response).to have_http_status :ok
     end
 
     it "returns the new rent, the base index and the current index" do
-      params = { base_rent: 10, region: "brussels", start_date: 20.years.ago, signed_on: 20.years.ago }
+      params = { base_rent: 10, region: "brussels", start_date: 20.years.ago, signed_on: 20.years.ago + 3.months }
       post "/v1/indexations", params:, as: :json
       data = response.parsed_body
 

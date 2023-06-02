@@ -6,7 +6,7 @@ class IndexesController < ApplicationController
 
   def indexations
     @errors = Hash.new { |hash, key| hash[key] = [] }
-    validates(params)
+    validate(params)
     return render_failure if @errors.any?
 
     base_month = calculate_month(params[:signed_on])
@@ -39,7 +39,6 @@ class IndexesController < ApplicationController
   end
 
   def calculate_new_rent(base_rent, base_index, current_index)
-    p base_index
     (base_rent * current_index).fdiv(base_index).round(2)
   end
 
@@ -67,20 +66,36 @@ class IndexesController < ApplicationController
     render json: { new_rent:, base_index:, current_index: }, status: :ok
   end
 
-  def validates(params)
-    if validates_presence_of("base_rent", params[:base_rent]) && !params[:base_rent].positive?
-      @errors["base_rent"] << "must_be_positive"
-    end
+  def validate(params)
+    validate_base_rent(params[:base_rent])
+    validate_region(params[:region])
+    validate_start_date(params[:start_date])
+    validate_signed_on(params[:signed_on])
+  end
 
-    if validates_presence_of("region", params[:region]) && REGIONS.exclude?(params[:region].downcase)
-      @errors["region"] << "must_be_in_belgium"
-    end
+  def validate_base_rent(base_rent)
+    return unless validates_presence_of("base_rent", base_rent) && !base_rent.positive?
 
-    if validates_presence_of("start_date", params[:start_date])
-      validates_not_in_future("start_date", params[:start_date])
-    end
+    @errors["base_rent"] << "must_be_positive"
+  end
 
-    validates_not_in_future("signed_on", params[:signed_on]) if validates_presence_of("signed_on", params[:signed_on])
+  def validate_region(region)
+    return unless validates_presence_of("region", region) && REGIONS.exclude?(region.downcase)
+
+    @errors["region"] << "must_be_in_belgium"
+  end
+
+  def validate_start_date(start_date)
+    return unless validates_presence_of("start_date", start_date)
+
+    validates_not_in_future("start_date", start_date)
+  end
+
+  def validate_signed_on(signed_on)
+    return unless validates_presence_of("signed_on", signed_on)
+
+    validates_not_in_future("signed_on", signed_on)
+    @errors["signed_on"] << "too_old_to_index" if year(calculate_month(signed_on)) < 1994
   end
 
   def validates_not_in_future(key, param)
