@@ -57,7 +57,9 @@
 
 <script setup>
   import { ref } from "vue"
-  import axios from "axios"
+  import useIndexStore from "../stores/IndexStore"
+
+  const indexStore = useIndexStore()
 
   const startDate = ref("")
   const signedOn = ref("")
@@ -73,13 +75,8 @@
       region: region.value
     }
 
-    try {
-      const res = await axios.post("http://localhost:3000/v1/indexations", body)
-      console.log(res.data)
-    } catch (err) {
-      errors.value = err.response.data
-      console.log(errors.value.base_rent)
-    }
+    await indexStore.getNewRent(body)
+    errors.value = indexStore.errors
   }
 </script>
 

@@ -1,11 +1,16 @@
 <template>
   <div class="container">
-    <Form />
+    <Result v-if="indexStore.hasNewRent" />
+    <Form v-else />
   </div>
 </template>
 
 <script setup>
+  import Result from "./components/Result.vue"
   import Form from "./components/Form.vue"
+  import useIndexStore from "./stores/IndexStore"
+
+  const indexStore = useIndexStore()
 </script>
 
 <style lang="scss">
