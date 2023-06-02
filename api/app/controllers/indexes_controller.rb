@@ -39,6 +39,7 @@ class IndexesController < ApplicationController
   end
 
   def calculate_new_rent(base_rent, base_index, current_index)
+    p base_index
     (base_rent * current_index).fdiv(base_index).round(2)
   end
 
@@ -53,7 +54,9 @@ class IndexesController < ApplicationController
     current_year = Date.current.strftime("%Y")
     start_month = date[5...]
 
-    "#{current_year}-#{start_month}"
+    return "#{current_year}-#{start_month}" if Date.parse("#{current_year}-#{start_month}") < Time.current
+
+    "#{current_year.to_i - 1}-#{start_month}"
   end
 
   def render_failure
