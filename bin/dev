@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Run RSpec, yarn lint, and rubocop before pushing
+echo "Running servers..."
+echo "###############################"
+yarn dev
