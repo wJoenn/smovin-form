@@ -81,12 +81,12 @@ class IndexesController < ApplicationController
   end
 
   def validates_not_in_future(key, param)
-    not_in_future = param < Time.current
+    not_in_future = Date.parse(param) < Time.current
     @errors[key] << "must_be_in_the_past" unless not_in_future
   end
 
   def validates_presence_of(key, param)
-    present = !param.nil?
+    present = !param.nil? && param != ""
     @errors[key] << "missing" unless present
 
     present
