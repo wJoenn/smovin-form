@@ -11,15 +11,15 @@ else
   echo -e "\e[32m\nSUCCESS: Your esLint tests were successful\e[0m"
 fi
 
-# echo -e "\nRunning Typescript..."
-# echo "###############################"
-# yarn type-check
-# if [ $? -ne 0 ]; then
-#   echo -e "\e[31m\nFAILURE: Your Typescript tests have failed\e[0m"
-#   exit 1
-# else
-#   echo -e "\e[32m\nSUCCESS: Your Typescript tests were successful\e[0m"
-# fi
+echo -e "\nRunning Typescript..."
+echo "###############################"
+yarn type-check
+if [ $? -ne 0 ]; then
+  echo -e "\e[31m\nFAILURE: Your Typescript tests have failed\e[0m"
+  exit 1
+else
+  echo -e "\e[32m\nSUCCESS: Your Typescript tests were successful\e[0m"
+fi
 
 echo -e "\nRunning Rubocop..."
 echo "###############################"
