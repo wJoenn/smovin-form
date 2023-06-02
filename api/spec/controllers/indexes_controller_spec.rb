@@ -35,14 +35,14 @@ RSpec.describe IndexesController, type: :request do
     end
 
     it "returns http ok" do
-      params = { base_rent: 10, region: "brussels", start_date: 20.years.ago, signed_on: 20.years.ago + 3.months }
+      params = { base_rent: 10, region: "brussels", start_date: 20.years.ago + 3.months, signed_on: 20.years.ago }
       post "/v1/indexations", params:, as: :json
 
       expect(response).to have_http_status :ok
     end
 
     it "returns the new rent, the base index and the current index" do
-      params = { base_rent: 10, region: "brussels", start_date: 20.years.ago, signed_on: 20.years.ago + 3.months }
+      params = { base_rent: 10, region: "brussels", start_date: 20.years.ago + 3.months, signed_on: 20.years.ago }
       post "/v1/indexations", params:, as: :json
       data = response.parsed_body
 
