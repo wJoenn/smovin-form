@@ -11,5 +11,5 @@ module IndexedRent
   end
 end
 
-require "indexed_rent/calculator"
-require "indexed_rent/validator"
+require_relative "indexed_rent/calculator"
+require_relative "indexed_rent/validator"

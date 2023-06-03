@@ -1,6 +1,6 @@
 require "sinatra"
 require "sinatra/cross_origin"
-require_relative "./lib/indexed_rent"
+require_relative "lib/indexed_rent"
 
 configure do
   enable :cross_origin
