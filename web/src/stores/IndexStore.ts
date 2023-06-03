@@ -11,6 +11,8 @@ interface ErrorResponse {
   region?: string[]
 }
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const useIndexStore = defineStore("IndexStore", () => {
   const newRent = ref(0)
   const baseRent = ref(0)
@@ -23,7 +25,7 @@ const useIndexStore = defineStore("IndexStore", () => {
 
   const getNewRent = async (body: BodyRequest) => {
     try {
-      const res = await axios.post("https://smovin-form-api.herokuapp.com/v1/indexations", body)
+      const res = await axios.post(`${API_URL}/v1/indexations`, body)
       const data = res.data
 
       newRent.value = data.new_rent
