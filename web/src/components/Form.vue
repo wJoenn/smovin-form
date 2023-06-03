@@ -1,60 +1,69 @@
 <template>
-  <div class="frame">
-    <h1>Rent Indexation</h1>
-    <form @submit.prevent="handleSubmit">
-      <div class="row">
-        <div class="field">
-          <label for="start_date">Contract start date</label>
-          <!-- eslint-disable-next-line max-len -->
-          <input v-model="startDate" type="date" name="start_date" :class="{ error: errors['start_date'] }" @input="handleInput">
-          <div v-if="errors['start_date']" class="errors">
-            <span v-for="error in errors['start_date']" :key="error" class="error">
-              <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
-            </span>
+  <div class="container">
+    <div class="header">
+      <img src="../assets/images/smovin.png" alt="smovin logo">
+      <a href="https://www.smovin.app/">Back to website <fai icon="fa-solid fa-arrow-right" /></a>
+    </div>
+
+    <div class="form">
+      <h1>Rent Indexation</h1>
+      <form @submit.prevent="handleSubmit">
+        <div class="row">
+          <div class="field">
+            <label for="start_date">Contract start date</label>
+            <!-- eslint-disable-next-line max-len -->
+            <input v-model="startDate" type="date" name="start_date" :class="{ error: errors['start_date'] }" @input="handleInput">
+            <div v-if="errors['start_date']" class="errors">
+              <span v-for="error in errors['start_date']" :key="error" class="error">
+                <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="signed_on">Contract signed on</label>
+            <!-- eslint-disable-next-line max-len -->
+            <input v-model="signedOn" type="date" name="signed_on" :class="{ error: errors['signed_on'] }" @input="handleInput">
+            <div v-if="errors['signed_on']" class="errors">
+              <span v-for="error in errors['signed_on']" :key="error" class="error">
+                <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
+              </span>
+            </div>
           </div>
         </div>
 
-        <div class="field">
-          <label for="signed_on">Contract signed on</label>
-          <!-- eslint-disable-next-line max-len -->
-          <input v-model="signedOn" type="date" name="signed_on" :class="{ error: errors['signed_on'] }" @input="handleInput">
-          <div v-if="errors['signed_on']" class="errors">
-            <span v-for="error in errors['signed_on']" :key="error" class="error">
-              <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
-            </span>
+        <div class="row">
+          <div class="field">
+            <label for="base_rent">Base rent</label>
+            <!-- eslint-disable-next-line max-len -->
+            <input v-model="baseRent" type="number" name="base_rent" :class="{ error: errors['base_rent'] }" @input="handleInput">
+            <div v-if="errors['base_rent']" class="errors">
+              <span v-for="error in errors['base_rent']" :key="error" class="error">
+                <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="region">Region</label>
+            <div class="region-buttons">
+              <span :class="{active: region === 'brussels'}" @click="handleClick('brussels')">Brussels</span>
+              <span :class="{active: region === 'flanders'}" @click="handleClick('flanders')">Flanders</span>
+              <span :class="{active: region === 'wallonia'}" @click="handleClick('wallonia')">Wallonia</span>
+            </div>
+            <div v-if="errors['region']" class="errors">
+              <span v-for="error in errors['region']" :key="error" class="error">
+                <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="field">
-          <label for="base_rent">Base rent</label>
-          <!-- eslint-disable-next-line max-len -->
-          <input v-model="baseRent" type="number" name="base_rent" :class="{ error: errors['base_rent'] }" @input="handleInput">
-          <div v-if="errors['base_rent']" class="errors">
-            <span v-for="error in errors['base_rent']" :key="error" class="error">
-              <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
-            </span>
-          </div>
-        </div>
+        <button>Compute index rent</button>
+      </form>
+    </div>
 
-        <div class="field">
-          <label for="region">Region</label>
-          <div class="region-buttons">
-            <span :class="{active: region === 'brussels'}" @click="handleClick('brussels')">Brussels</span>
-            <span :class="{active: region === 'flanders'}" @click="handleClick('flanders')">Flanders</span>
-            <span :class="{active: region === 'wallonia'}" @click="handleClick('wallonia')">Wallonia</span>
-          </div>
-          <div v-if="errors['region']" class="errors">
-            <span v-for="error in errors['region']" :key="error" class="error">
-              <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <button>Compute index rent</button>
-    </form>
+    <div class="footer" />
   </div>
 </template>
 
@@ -107,7 +116,7 @@
     gap: 30px;
 
     button {
-      background-color: #002dac;
+      background-color: $blue;
       border: none;
       border-radius: 5px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -138,7 +147,7 @@
       }
 
       &:focus {
-        border-color: #002dac;
+        border-color: $blue;
         outline: none;
       }
     }
@@ -169,7 +178,7 @@
         padding: 0.75rem 1.5rem;
 
         &.active {
-          background-color: #002dac;
+          background-color: $blue;
         }
 
         &:last-child {
@@ -181,6 +190,42 @@
     .row {
       display: flex;
       gap: 20px;
+    }
+  }
+
+  .footer {
+    height: 130px;
+  }
+
+  .form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin: 0 auto;
+    width: 800px;
+  }
+
+  .header {
+    align-items: center;
+    display: flex;
+    height: 130px;
+    justify-content: space-between;
+
+    a {
+      align-items: center;
+      color: $blue;
+      display: flex;
+      filter: brightness(2.5);
+      gap: 10px;
+
+      i {
+        font-size: 0.8rem;
+      }
+    }
+
+    img {
+      width: 250px;
     }
   }
 </style>

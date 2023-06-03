@@ -1,8 +1,6 @@
 <template>
-  <div class="container">
-    <Result v-if="indexStore.hasNewRent" />
-    <Form v-else />
-  </div>
+  <Result v-if="indexStore.hasNewRent" />
+  <Form v-else />
 </template>
 
 <script setup lang="ts">

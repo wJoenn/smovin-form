@@ -33,6 +33,10 @@ nav, ul {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
   margin: 0 auto;
   width: Min(1280px, 80%);
 }

@@ -9,19 +9,19 @@ const validateInputs = () => {
         if (validateDateOf(element.value)) {
           element.classList.remove("error")
           indexStore.removeError(element.name)
-        } else element.classList.add("error")
+        }
         break
       case "signed_on":
         if (validateDateOf(element.value) && validateIndexabilityOf(element.value)) {
           element.classList.remove("error")
           indexStore.removeError(element.name)
-        } else element.classList.add("error")
+        }
         break
       case "base_rent":
         if (validatePositivenessOf(element.value)) {
           element.classList.remove("error")
           indexStore.removeError(element.name)
-        } else element.classList.add("error")
+        }
         break
       default:
         break
