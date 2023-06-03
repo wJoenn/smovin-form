@@ -1,8 +1,9 @@
 # example netlify.toml
 [build]
-  command = "yarn vite:build"
+  base = "web"
+  command = "vite build"
   functions = "netlify/functions"
-  publish = "web/dist"
+  publish = "dist"
 
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
