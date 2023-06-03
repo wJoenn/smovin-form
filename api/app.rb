@@ -1,6 +1,6 @@
 require "sinatra"
 require "sinatra/cross_origin"
-require_relative "./lib/indexation"
+require_relative "./lib/indexed_rent"
 
 configure do
   enable :cross_origin
@@ -12,7 +12,7 @@ end
 
 post "/v1/indexations" do
   params = JSON.parse(request.body.read)
-  result = Indexation.new.execute(params)
+  result = IndexedRent::Calculator.new(params).calculate
 
   response.status = result.key?(:new_rent) ? 200 : 400
   return result.to_json
