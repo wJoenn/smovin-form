@@ -1,5 +1,5 @@
 require "json"
-require 'rack/test'
+require "rack/test"
 require_relative "../app"
 require_relative "../lib/indexed_rent"
 
@@ -8,7 +8,7 @@ def parsed_params(params)
 end
 
 def some_time_ago(years = 0, months = 0, days = 0)
-  Date.today - (365.25 * years).round - (30.437 * months).round - (days)
+  Date.today - (365.25 * years).round - (30.437 * months).round - days
 end
 
 describe Sinatra::Application do
