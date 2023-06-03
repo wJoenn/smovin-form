@@ -5,7 +5,8 @@
       <div class="row">
         <div class="field">
           <label for="start_date">Contract start date</label>
-          <input v-model="startDate" type="date" name="start_date" :class="{ error: errors['start_date'] }">
+          <!-- eslint-disable-next-line max-len -->
+          <input v-model="startDate" type="date" name="start_date" :class="{ error: errors['start_date'] }" @input="handleInput">
           <div v-if="errors['start_date']" class="errors">
             <span v-for="error in errors['start_date']" :key="error" class="error">
               <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
@@ -15,7 +16,8 @@
 
         <div class="field">
           <label for="signed_on">Contract signed on</label>
-          <input v-model="signedOn" type="date" name="signed_on" :class="{ error: errors['signed_on'] }">
+          <!-- eslint-disable-next-line max-len -->
+          <input v-model="signedOn" type="date" name="signed_on" :class="{ error: errors['signed_on'] }" @input="handleInput">
           <div v-if="errors['signed_on']" class="errors">
             <span v-for="error in errors['signed_on']" :key="error" class="error">
               <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
@@ -27,7 +29,8 @@
       <div class="row">
         <div class="field">
           <label for="base_rent">Base rent</label>
-          <input v-model="baseRent" type="number" name="base_rent" :class="{ error: errors['base_rent'] }">
+          <!-- eslint-disable-next-line max-len -->
+          <input v-model="baseRent" type="number" name="base_rent" :class="{ error: errors['base_rent'] }" @input="handleInput">
           <div v-if="errors['base_rent']" class="errors">
             <span v-for="error in errors['base_rent']" :key="error" class="error">
               <fai icon="fa-solid fa-circle-exclamation" />{{ error }}
@@ -38,9 +41,9 @@
         <div class="field">
           <label for="region">Region</label>
           <div class="region-buttons">
-            <span :class="{active: region === 'brussels'}" @click="region = 'brussels'">Brussels</span>
-            <span :class="{active: region === 'flanders'}" @click="region = 'flanders'">Flanders</span>
-            <span :class="{active: region === 'wallonia'}" @click="region = 'wallonia'">Wallonia</span>
+            <span :class="{active: region === 'brussels'}" @click="handleClick('brussels')">Brussels</span>
+            <span :class="{active: region === 'flanders'}" @click="handleClick('flanders')">Flanders</span>
+            <span :class="{active: region === 'wallonia'}" @click="handleClick('wallonia')">Wallonia</span>
           </div>
           <div v-if="errors['region']" class="errors">
             <span v-for="error in errors['region']" :key="error" class="error">
@@ -57,11 +60,13 @@
 
 <script setup lang="ts">
   import { computed, ref } from "vue"
-  import useIndexStore from "../stores/IndexStore.ts"
 
+  import validateInputs from "../composables/validateInputs.ts"
+  import useIndexStore from "../stores/IndexStore.ts"
   import BodyRequest from "../types/BodyRequest.ts"
 
   const indexStore = useIndexStore()
+  const validation = validateInputs()
 
   const startDate = ref("")
   const signedOn = ref("")
@@ -69,6 +74,18 @@
   const region = ref("")
 
   const errors = computed(() => indexStore.getErrors)
+
+  const handleClick = (input: string) => {
+    region.value = input
+    indexStore.removeError("region")
+  }
+
+  const handleInput = (event: Event) => {
+    const target = event.target as HTMLInputElement
+    const key = target.name
+    const hasError = errors.value[key as keyof typeof errors.value] !== undefined
+    if (hasError) validation.proceed(target)
+  }
 
   const handleSubmit = async () => {
     const body: BodyRequest = {

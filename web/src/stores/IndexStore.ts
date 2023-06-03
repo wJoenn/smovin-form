@@ -37,7 +37,11 @@ const useIndexStore = defineStore("IndexStore", () => {
     }
   }
 
-  return { newRent, baseRent, currentIndex, baseIndex, errors, getErrors, hasNewRent, getNewRent }
+  const removeError = (key: string) => {
+    delete errors.value[key as keyof ErrorResponse]
+  }
+
+  return { newRent, baseRent, currentIndex, baseIndex, errors, getErrors, hasNewRent, getNewRent, removeError }
 })
 
 export default useIndexStore
