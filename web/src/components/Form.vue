@@ -111,6 +111,7 @@
       transition: border-color 0.3s ease;
 
       &.error {
+        animation: glitch 0.1s linear;
         background-color: #3b0012;
         border-color: rgba(255, 0, 0, 0.5);
 
